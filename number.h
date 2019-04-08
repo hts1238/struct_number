@@ -7,20 +7,21 @@ using namespace std;
 
 struct Number {
 public:
-    int num;
-    int den;
+
+    long long num;
+    long long den;
 
     Number() {
         num = 0;
         den = 1;
     }
 
-    Number(const int& n) {
+    Number(const long long& n) {
         num = n;
         den = 1;
     }
 
-    Number(const int& n, const int& d) {
+    Number(const long long& n, const long long& d) {
         if (d == 0) {
             cout << "Error: Division by zero at initialization. Denominator can not be zero\n";
             exit(1);
@@ -35,17 +36,21 @@ public:
         return (double) num / den;
     }
 
-    Number operator + (Number& o) {
+    Number operator + (const Number& o) {
         return Number(num*o.den + den*o.num, den*o.den);
     }
 
-    Number operator - (Number& o) {
+    Number operator + (const long long& o) {
+        return Number(num + o*den, den);
+    }
+
+    Number operator - (const Number& o) {
         Number n(-o.num, o.den);
         return *this + n;
     }
 
-    Number operator * (Number& o) {
-        
+    Number operator * (const Number& o) {
+        return Number(num * o.num, den * o.den);
     }
 
 private:
@@ -55,7 +60,7 @@ private:
         den /= _gcd;
     }
 
-    int gcd(int a, int b) {
+    int gcd(long long a, long long b) {
         a = abs(a);
         b = abs(b);
         
@@ -66,7 +71,7 @@ private:
         return a;
     }
 
-    int lcm(int& a, int& b) {
+    int lcm(long long& a, long long& b) {
         return a * b / gcd(a, b);
     }
 };
@@ -85,5 +90,6 @@ istream& operator >> (istream& cin, Number& n) {
     cin >> val;
     n = Number(val);
 }
+
 
 #endif
